@@ -13,5 +13,7 @@ export function trackVisit() {
   } catch {
     return; // storage blocked (private mode) — skip silently
   }
-  supabase.rpc('record_visit', { p_visitor: id });
+    supabase
+    .rpc('record_visit', { p_visitor: id })
+    .then(({ error }) => { if (error) console.error('visit error', error); });
 }
