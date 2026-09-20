@@ -161,6 +161,13 @@ function Dashboard() {
     return () => clearTimeout(toastTimer.current);
   }, [load]);
 
+    const [visits, setVisits] = useState(null);
+
+  useEffect(() => {
+    supabase.rpc('get_visit_stats').then(({ data }) => setVisits(data?.[0] || null));
+  }, []);
+
+
   const counts = useMemo(
     () =>
       rows.reduce(
@@ -250,6 +257,8 @@ function Dashboard() {
         <div className="stat"><span>Approved</span><strong>{counts.approved}</strong></div>
         <div className="stat"><span>Rejected</span><strong>{counts.rejected}</strong></div>
         <div className="stat"><span>Total</span><strong>{counts.all}</strong></div>
+                <div className="stat"><span>Visitors today</span><strong>{visits?.today_visitors ?? '—'}</strong></div>
+        <div className="stat"><span>Visitors all time</span><strong>{visits?.total_visitors ?? '—'}</strong></div>
       </div>
 
       <div className="toolbar">
@@ -356,3 +365,4 @@ function Dashboard() {
     </div>
   );
 }
+
