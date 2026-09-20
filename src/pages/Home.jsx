@@ -5,9 +5,12 @@ import Curriculum from '../components/Curriculum';
 import Steps from '../components/Steps';
 import Enroll from '../components/Enroll';
 import FAQ from '../components/FAQ';
+import { trackVisit } from '../lib/visits';
 
 export default function Home() {
   const { hash } = useLocation();
+
+    useEffect(() => { trackVisit(); }, []);
 
   // Scroll to #section when arriving from another page (e.g. /status → /#enroll).
   useEffect(() => {
@@ -28,3 +31,4 @@ export default function Home() {
     </>
   );
 }
+
